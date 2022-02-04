@@ -24,7 +24,7 @@ public class WinState : MonoBehaviour
 
     private void OnWinEvent(Mark mark, Color color)
     {
-        uiWinnerText.text = (mark==Mark.None)?"Nadie Gana ":mark.ToString()+" GANA";
+        uiWinnerText.text = (mark==Mark.None)?"Empate ":mark.ToString()+" GANA";
         uiWinnerText.color = color;
         //Canvas.SetActive(true);
     }
