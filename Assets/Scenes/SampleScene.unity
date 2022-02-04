@@ -295,7 +295,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Tic Tac Toe
+  m_text: '   GATO #'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e80cef2f6746a054fbbd6aa1ee8bd5a1, type: 2}
   m_sharedMaterial: {fileID: -4656566242636096415, guid: e80cef2f6746a054fbbd6aa1ee8bd5a1, type: 2}
