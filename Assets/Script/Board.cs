@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
 using UnityEngine;
 
 public class Board : MonoBehaviour
@@ -18,9 +19,12 @@ public class Board : MonoBehaviour
     [SerializeField] private Color colorX;
     [SerializeField] private Color colorO;
 
+    public UnityAction<Mark, Color> OnWinAction;
     public Mark[] marks;
     private Camera cam;
     private Mark currentMark;
+    private bool canPlay;
+    private int marksCount = 0;
 
 
 
@@ -30,12 +34,13 @@ public class Board : MonoBehaviour
         cam = Camera.main;
         currentMark = Mark.X;
         marks = new Mark[9];
+        canPlay  = true;
     }
 
     // Update is called once per frame
     private void Update()
     {
-        if(Input.GetMouseButtonUp(0))
+        if(canPlay && Input.GetMouseButtonUp(0))
         {
             Vector2 touchPosition = cam.ScreenToWorldPoint (Input.mousePosition);
             Collider2D hit = Physics2D.OverlapCircle(touchPosition, touchRadius, boxesLayerMask);
@@ -51,12 +56,30 @@ public class Board : MonoBehaviour
         {
             marks[box.index] = currentMark;
             box.SetAsMarked (GetSprite(), currentMark, GetColor());
-
+            marksCount++;
             //
             bool won = CheckIfWin();
             if(won){
+                if(OnWinAction != null)
+                {
+                    OnWinAction.Invoke(currentMark, GetColor());
+                }
                 Debug.Log(currentMark.ToString()+" Wins.");
+                canPlay=false;
                 return;
+            }
+
+            if(marksCount==9)
+            {
+                
+                if(OnWinAction != null)
+                {
+                    OnWinAction.Invoke(Mark.None, Color.white);
+                }
+                Debug.Log("Nobody Wins.");
+                canPlay=false;
+                return;
+            
             }
         
 
